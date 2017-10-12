@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,8 +23,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rN0-oO-hH8">
-                                <rect key="frame" x="164" y="66" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="158.5" y="66" width="57" height="30"/>
+                                <state key="normal" title="Request"/>
                                 <connections>
                                     <action selector="myButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Cj-hT-qOW"/>
                                 </connections>
@@ -35,8 +35,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXY-Oz-Jr3">
-                                <rect key="frame" x="166" y="156" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Response" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXY-Oz-Jr3">
+                                <rect key="frame" x="16" y="156" width="343" height="122"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="122" id="rQ3-id-Pja"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -44,13 +47,14 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="mXY-Oz-Jr3" firstAttribute="top" secondItem="rN0-oO-hH8" secondAttribute="bottom" constant="60" id="354-Ju-Eal"/>
                             <constraint firstItem="rN0-oO-hH8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ezf-yr-de8"/>
                             <constraint firstItem="rN0-oO-hH8" firstAttribute="top" secondItem="sOb-OZ-gc8" secondAttribute="bottom" constant="8" id="Pjd-z1-d7p"/>
+                            <constraint firstItem="mXY-Oz-Jr3" firstAttribute="trailing" secondItem="sOb-OZ-gc8" secondAttribute="trailing" id="XyE-dI-HyE"/>
                             <constraint firstItem="sOb-OZ-gc8" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="XyO-5C-bEg"/>
                             <constraint firstItem="sOb-OZ-gc8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="adz-Fd-p7H"/>
                             <constraint firstItem="sOb-OZ-gc8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="duF-YT-plu"/>
-                            <constraint firstItem="mXY-Oz-Jr3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ifD-gU-hP5"/>
+                            <constraint firstItem="mXY-Oz-Jr3" firstAttribute="leading" secondItem="sOb-OZ-gc8" secondAttribute="leading" id="p2t-XB-V1I"/>
+                            <constraint firstItem="mXY-Oz-Jr3" firstAttribute="top" secondItem="rN0-oO-hH8" secondAttribute="bottom" constant="60" id="pnF-rx-uPP"/>
                         </constraints>
                     </view>
                     <connections>

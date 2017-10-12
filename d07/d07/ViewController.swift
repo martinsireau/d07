@@ -46,6 +46,12 @@ class ViewController: UIViewController {
                         print(error)
                     }
                 })
+            } else {
+                if (reponse.intents?.count != 0) {
+                    if let myRes = reponse.intent() {
+                        self.myLabel.text = myRes.description
+                    }
+                }
             }
         }
             , failureHandle: {fail in
