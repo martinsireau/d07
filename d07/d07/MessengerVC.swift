@@ -9,6 +9,8 @@
 import UIKit
 
 import JSQMessagesViewController
+import RecastAI
+import ForecastIO
 
 struct User {
     let id: String
@@ -18,7 +20,8 @@ struct User {
 class ViewControllerScnd: JSQMessagesViewController {
     let user1 = User(id: "1", name: "Me")
     let user2 = User(id: "2", name: "Bot")
-    
+    let bot = RecastAIClient(token : "86e58d61cf0d5e00923fc2dfd506d48b", language: "fr")
+    let darkSkyClient = DarkSkyClient(apiKey: "a265eff50f4af5817a0cac58a3afa3a7")
     
     var currentUser: User {
         return user1
@@ -26,6 +29,56 @@ class ViewControllerScnd: JSQMessagesViewController {
     
     // all messages of users1, users2
     var messages = [JSQMessage]()
+    
+    func recastResponse(response: ConverseResponse){
+        print("REPONSE = \(response)")
+        if let myRes = response.entities?["location"] as? [[String : Any]]{
+            let lat = myRes[0]["lat"] as! Double!
+            let lng = myRes[0]["lng"] as! Double!
+            
+            self.darkSkyClient.getForecast(latitude: lat!, longitude: lng!, completion: { result in
+                switch result {
+                case .success(let value, _):
+                    let formatted = myRes[0]["formatted"] as! String!
+                    DispatchQueue.main.async {
+                        let mess = JSQMessage(senderId: "2", displayName: "Bot", text: "\(formatted!) is \((value.hourly!.summary)!)")
+                        self.messages.append(mess!)
+                        //                        self.myLabel.text = "\(formatted!) is \((value.hourly!.summary)!)"
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            })
+        } else {
+            if (response.intents?.count != 0) {
+                if let myRes = response.intents as? [[String : Any]] {
+                    if let mySlug = myRes[0]["slug"] as? String{
+                        print(mySlug)
+                        DispatchQueue.main.async {
+                            let mess = JSQMessage(senderId: "2", displayName: "Bot", text: mySlug)
+                            self.messages.append(mess!)
+                            self.finishSendingMessage()
+//                            self.myLabel.text = mySlug
+                        }
+                    }
+                    
+                }
+            } else {
+                let mess = JSQMessage(senderId: "2", displayName: "Bot", text: "sorry, an error occured.")
+                self.messages.append(mess!)
+//                self.myLabel.text = "Error"
+                print("Error")
+            }
+        }
+    }
+    
+    func recastError(error: Error) {
+        let mess = JSQMessage(senderId: "2", displayName: "Bot", text: "sorry, an error occured.")
+        self.messages.append(mess!)
+        self.finishSendingMessage()
+//        self.myLabel.text = "Error"
+        print(error)
+    }
 }
 
 extension ViewControllerScnd {
@@ -34,6 +87,7 @@ extension ViewControllerScnd {
         let message = JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text)
         
         messages.append(message!)
+        self.makeRecastRequest(request: text!)
         
         finishSendingMessage()
     }
@@ -85,6 +139,16 @@ extension ViewControllerScnd {
         
         
         self.messages = getMessages()
+    }
+    
+    func makeRecastRequest(request: String) {
+        if request != ""{
+            self.bot.textConverse(request, successHandler: recastResponse, failureHandle: recastError)
+        } else {
+            let mess = JSQMessage(senderId: "2", displayName: "Bot", text: "sorry, an error occured.")
+            self.messages.append(mess!)
+//            self.myLabel.text = "Request can't be empty"
+        }
     }
 }
 

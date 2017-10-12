@@ -29,13 +29,13 @@ class ViewController: UIViewController {
 
     func makeRecastRequest(request: String) {
         if request != ""{
-            self.bot.textRequest(request, successHandler: recastResponse, failureHandle: recastError)
+            self.bot.textConverse(request, successHandler: recastResponse, failureHandle: recastError)
         } else {
             self.myLabel.text = "Request can't be empty"
         }
     }
     
-    func recastResponse(response: Response){
+    func recastResponse(response: ConverseResponse){
         print("REPONSE = \(response)")
         if let myRes = response.entities?["location"] as? [[String : Any]]{
             let lat = myRes[0]["lat"] as! Double!
@@ -54,8 +54,14 @@ class ViewController: UIViewController {
             })
         } else {
             if (response.intents?.count != 0) {
-                if let myRes = response.intent() {
-                    self.myLabel.text = myRes.description
+                if let myRes = response.intents as? [[String : Any]] {
+                    if let mySlug = myRes[0]["slug"] as? String{
+                        print(mySlug)
+                        DispatchQueue.main.async {
+                            self.myLabel.text = mySlug
+                        }
+                    }
+
                 }
             } else {
                 self.myLabel.text = "Error"
@@ -68,43 +74,6 @@ class ViewController: UIViewController {
         self.myLabel.text = "Error"
         print(error)
     }
-    
-    func recastRequestDone(_ response : Response) {
-        let location = response.get(entity: "location")
-        print("Location = \(location)")
-    }
-    
-//    func makeRecastRequest(request: String){
-//        self.bot.textRequest(request, successHandler: { reponse in
-//            print("response = \(reponse)")
-//            if let myRes = reponse.entities?["location"] as? [[String : Any]]{
-//                let lat = myRes[0]["lat"] as! Double!
-//                let lng = myRes[0]["lng"] as! Double!
-//                
-//                self.darkSkyClient.getForecast(latitude: lat!, longitude: lng!, completion: { result in
-//                    switch result {
-//                    case .success(let value, _):
-//                        let formatted = myRes[0]["formatted"] as! String!
-//                        DispatchQueue.main.async {
-//                            self.myLabel.text = "\(formatted!) is \((value.hourly!.summary)!)"
-//                        }
-//
-//                    case .failure(let error):
-//                        print(error)
-//                    }
-//                })
-//            } else {
-//                if (reponse.intents?.count != 0) {
-//                    if let myRes = reponse.intent() {
-//                        self.myLabel.text = myRes.description
-//                    }
-//                }
-//            }
-//        }
-//            , failureHandle: {fail in
-//                print("faillll = \(fail)")
-//        })
-//    }
     
 }
 
