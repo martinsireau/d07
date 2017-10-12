@@ -26,38 +26,85 @@ class ViewController: UIViewController {
         self.makeRecastRequest(request: myTextField.text!)
       
     }
-    
-    func makeRecastRequest(request: String){
-        self.bot.textRequest(request, successHandler: { reponse in
-            print("response = \(reponse)")
-            if let myRes = reponse.entities?["location"] as? [[String : Any]]{
-                let lat = myRes[0]["lat"] as! Double!
-                let lng = myRes[0]["lng"] as! Double!
-                
-                self.darkSkyClient.getForecast(latitude: lat!, longitude: lng!, completion: { result in
-                    switch result {
-                    case .success(let value, _):
-                        let formatted = myRes[0]["formatted"] as! String!
-                        DispatchQueue.main.async {
-                            self.myLabel.text = "\(formatted!) is \((value.hourly!.summary)!)"
-                        }
 
-                    case .failure(let error):
-                        print(error)
+    func makeRecastRequest(request: String) {
+        if request != ""{
+            self.bot.textRequest(request, successHandler: recastResponse, failureHandle: recastError)
+        } else {
+            self.myLabel.text = "Request can't be empty"
+        }
+    }
+    
+    func recastResponse(response: Response){
+        print("REPONSE = \(response)")
+        if let myRes = response.entities?["location"] as? [[String : Any]]{
+            let lat = myRes[0]["lat"] as! Double!
+            let lng = myRes[0]["lng"] as! Double!
+            
+            self.darkSkyClient.getForecast(latitude: lat!, longitude: lng!, completion: { result in
+                switch result {
+                case .success(let value, _):
+                    let formatted = myRes[0]["formatted"] as! String!
+                    DispatchQueue.main.async {
+                        self.myLabel.text = "\(formatted!) is \((value.hourly!.summary)!)"
                     }
-                })
-            } else {
-                if (reponse.intents?.count != 0) {
-                    if let myRes = reponse.intent() {
-                        self.myLabel.text = myRes.description
-                    }
+                case .failure(let error):
+                    print(error)
                 }
+            })
+        } else {
+            if (response.intents?.count != 0) {
+                if let myRes = response.intent() {
+                    self.myLabel.text = myRes.description
+                }
+            } else {
+                self.myLabel.text = "Error"
+                print("Error")
             }
         }
-            , failureHandle: {fail in
-                print("faillll = \(fail)")
-        })
     }
+    
+    func recastError(error: Error) {
+        self.myLabel.text = "Error"
+        print(error)
+    }
+    
+    func recastRequestDone(_ response : Response) {
+        let location = response.get(entity: "location")
+        print("Location = \(location)")
+    }
+    
+//    func makeRecastRequest(request: String){
+//        self.bot.textRequest(request, successHandler: { reponse in
+//            print("response = \(reponse)")
+//            if let myRes = reponse.entities?["location"] as? [[String : Any]]{
+//                let lat = myRes[0]["lat"] as! Double!
+//                let lng = myRes[0]["lng"] as! Double!
+//                
+//                self.darkSkyClient.getForecast(latitude: lat!, longitude: lng!, completion: { result in
+//                    switch result {
+//                    case .success(let value, _):
+//                        let formatted = myRes[0]["formatted"] as! String!
+//                        DispatchQueue.main.async {
+//                            self.myLabel.text = "\(formatted!) is \((value.hourly!.summary)!)"
+//                        }
+//
+//                    case .failure(let error):
+//                        print(error)
+//                    }
+//                })
+//            } else {
+//                if (reponse.intents?.count != 0) {
+//                    if let myRes = reponse.intent() {
+//                        self.myLabel.text = myRes.description
+//                    }
+//                }
+//            }
+//        }
+//            , failureHandle: {fail in
+//                print("faillll = \(fail)")
+//        })
+//    }
     
 }
 

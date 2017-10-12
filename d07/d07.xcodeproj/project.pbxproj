@@ -13,6 +13,7 @@
 		A36B219B1F8E50DB00B10CE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A36B21991F8E50DB00B10CE9 /* Main.storyboard */; };
 		A36B219D1F8E50DB00B10CE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A36B219C1F8E50DB00B10CE9 /* Assets.xcassets */; };
 		A36B21A01F8E50DB00B10CE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A36B219E1F8E50DB00B10CE9 /* LaunchScreen.storyboard */; };
+		A39A869F1F8F6C7600BBD9BA /* MessengerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39A869E1F8F6C7600BBD9BA /* MessengerVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		A36B219C1F8E50DB00B10CE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A36B219F1F8E50DB00B10CE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A36B21A11F8E50DB00B10CE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A39A869E1F8F6C7600BBD9BA /* MessengerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessengerVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			children = (
 				A36B21951F8E50DB00B10CE9 /* AppDelegate.swift */,
 				A36B21971F8E50DB00B10CE9 /* ViewController.swift */,
+				A39A869E1F8F6C7600BBD9BA /* MessengerVC.swift */,
 				A36B21991F8E50DB00B10CE9 /* Main.storyboard */,
 				A36B219C1F8E50DB00B10CE9 /* Assets.xcassets */,
 				A36B219E1F8E50DB00B10CE9 /* LaunchScreen.storyboard */,
@@ -174,7 +177,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		51B26ADD49C0145A19BCC7A5 /* [CP] Embed Pods Frameworks */ = {
@@ -225,6 +228,7 @@
 			files = (
 				A36B21981F8E50DB00B10CE9 /* ViewController.swift in Sources */,
 				A36B21961F8E50DB00B10CE9 /* AppDelegate.swift in Sources */,
+				A39A869F1F8F6C7600BBD9BA /* MessengerVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
